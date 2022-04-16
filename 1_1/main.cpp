@@ -9,7 +9,7 @@ unsigned long long Hash(const std::string &key) {
     unsigned long long hash = 0;
     long long p_pow = 1;
     for (char letter: key) {
-        hash += (letter - 'a' + 1) * p_pow;
+        hash = hash * p + letter;
         p_pow *= p;
     }
     return hash;
@@ -17,7 +17,7 @@ unsigned long long Hash(const std::string &key) {
 
 unsigned int find_hash(const std::string &key, int iteration, unsigned long long hash, long long size) {
     if (!key.empty()) {
-        if (iteration == 0 || iteration == 1) {
+        if (iteration == 0) {
             return hash % size;
         } else {
             return (hash + iteration * iteration / 2 + iteration / 4) % size;
@@ -29,8 +29,6 @@ unsigned int find_hash(const std::string &key, int iteration, unsigned long long
 
 class HashTable {
 public:
-    int size, fill;
-
     explicit HashTable(int n) : size(n), table(n, "0"), fill(0) {}
 
     bool Has(const std::string &key) const {
@@ -72,6 +70,7 @@ public:
                 return true;
             }
         }
+        return false;
     }
 
     void ReHash() {
@@ -86,6 +85,7 @@ public:
 
 private:
     std::vector<std::string> table;
+    int size, fill;
 };
 
 int main() {
