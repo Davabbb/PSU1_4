@@ -18,12 +18,12 @@ void final(std::vector<std::vector<int>>& grath, int a, int n, std::vector<int>&
     }
 }
 
-std::vector<int> find_length(std::vector<std::vector<int>> grath, int n) {
-    std::vector<int> ans(n);
+std::vector<int> find_length(std::vector<std::vector<int>>& grath, int n) {
     std::vector<int> height(n);
     std::vector<int> count(n);
 
     dfs(grath, 0, height, count);
+    std::vector<int> ans(n);
     ans[0] = 0;
     for (int i = 0; i < n; i++) {
         ans[0] += height[i];
@@ -41,8 +41,7 @@ int main() {
         std::cin >> point1 >> point2;
         grath[point1].push_back(point2);
     }
-    std::vector<int> ans;
-    ans = find_length(grath, n);
+    std::vector<int> ans = find_length(grath, n);
     for (int elem : ans) {
         std::cout << elem << std::endl;
     }
